@@ -65,11 +65,11 @@ module Viggles
 
     # @param viggle_member_id [String] required
     # @param params [Hash] user profile data to send to Viggle
-    def update(viggle_member_id, params = {})
+    def update(params = {})
       params.merge({
         token: @token,
-        memberId: viggle_member_id,
-        authentication: auth(@token + viggle_member_id)
+        memberId: params[:memberId],
+        authentication: auth(@token + params[:memberId])
       })
 
       begin
@@ -85,11 +85,10 @@ module Viggles
     # Points Endpoints
     ##
 
-    def deposit(viggle_member_id, params = {})
+    def deposit(params = {})
       params = {
         token: @token,
-        viggleMemberId: viggle_member_id,
-        authentication: auth(@token + viggle_member_id + params[:pointsToDeposit].to_s + params[:partnerTransactionId] + params[:campaign] + params[:transactionType] + params[:actionType])
+        authentication: auth(@token + params[:viggleMemberId] + params[:pointsToDeposit].to_s + params[:partnerTransactionId] + params[:campaign] + params[:transactionType] + params[:actionType])
       }.merge(params)
 
       begin
